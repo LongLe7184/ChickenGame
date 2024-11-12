@@ -1,5 +1,5 @@
 # ChickenGame
-_This is an indie game was created for learning purpose!_
+_This indie game was created for learning purpose!_
 
 + Subject    : SoC Lab - HCMUS
 + Topic      : Development an application for G-Sensor on DE10 board.
