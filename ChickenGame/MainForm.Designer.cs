@@ -36,7 +36,7 @@
             // BgTimer
             // 
             this.BgTimer.Enabled = true;
-            this.BgTimer.Interval = 50;
+            this.BgTimer.Interval = 20;
             this.BgTimer.Tick += new System.EventHandler(this.BgTimer_Tick);
             // 
             // MainForm
