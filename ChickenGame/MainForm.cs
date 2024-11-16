@@ -26,14 +26,15 @@ namespace ChickenGame
         //Joystick var
         private int xVal;           //Horizontal control val
         private int yVal;           //Vertical control val
-        private bool pVal;          //Try again button
+        private bool bVal1;         //Start game button
+        private bool bVal2;         //Try again button
         private StringBuilder dataBuffer;   //Store data from serial port
 
         //Chickens
         private List<Tuple<Point, Image>> chickenObjects;
         private Size chickenSize;
         private List<Image> chickenImages;
-        
+
         //Player
         private Image playerImage;
         private Size playerSize;
@@ -46,7 +47,7 @@ namespace ChickenGame
 
             //Initial "Try Again" button
             tryAgainButton = new Button();
-            tryAgainButton.Text = "Try Again";
+            //tryAgainButton.Text = "Try Again";
             tryAgainButton.Size = new Size(100, 50);
             tryAgainButton.Location = new Point((this.ClientSize.Width - tryAgainButton.Width) / 2, (this.ClientSize.Height - tryAgainButton.Height) / 2);
             tryAgainButton.Visible = false;
@@ -55,7 +56,7 @@ namespace ChickenGame
 
             //Initial UI timer
             timer = new System.Windows.Forms.Timer();
-            timer.Interval = 80;                            //in millisecond
+            timer.Interval = 50;                            //in millisecond
             timer.Tick += BgTimer_Tick;                     //occurs when above timer interval elapsed
             timer.Start();
 
@@ -135,40 +136,45 @@ namespace ChickenGame
                 chickenObjects[i] = new Tuple<Point, Image>(new Point(bgObj.Item1.X, bgObj.Item1.Y + bgSpeed), bgObj.Item2); // Move bgObject down by bgSpeed pixels
             }
 
-            // Update position of player
-            switch (xVal)
+            // Update position of player with different speeds
+            if (playerPosition.X <= this.ClientSize.Width - playerSize.Width)   //Player go RIGHT
             {
-                case 1: //Player go RIGHT
-                    if (playerPosition.X <= this.ClientSize.Width - playerSize.Width)
-                    {
-                        playerPosition = new Point(playerPosition.X + 2, playerPosition.Y);
-                    }
-                    break;
-                case -1: //Player go LEFT
-                    if (playerPosition.X >= 2)
-                    {
-                        playerPosition = new Point(playerPosition.X - 2, playerPosition.Y);
-                    }
-                   break;
-                default:
-                    break;
+                if (5 <= xVal && xVal < 30)
+                    playerPosition = new Point(playerPosition.X + 1, playerPosition.Y);
+                else if (30 <= xVal && xVal < 55)
+                    playerPosition = new Point(playerPosition.X + 2, playerPosition.Y);
+                else if (55 <= xVal)
+                    playerPosition = new Point(playerPosition.X + 3, playerPosition.Y);
             }
-            switch (yVal)
+
+            if (playerPosition.X >= 2) //Player go LEFT
             {
-                case 1: //Player go UP
-                    if (playerPosition.Y >= 2)
-                    {
-                        playerPosition = new Point(playerPosition.X, playerPosition.Y - 2);
-                    }
-                    break;
-                case -1: //Player go DOWN
-                    if (playerPosition.Y <= this.ClientSize.Height - playerSize.Height)
-                    {
-                        playerPosition = new Point(playerPosition.X, playerPosition.Y + 2);
-                    }
-                   break;
-                default:
-                    break;
+                if (-5 >= xVal && xVal > -30)
+                    playerPosition = new Point(playerPosition.X - 1, playerPosition.Y);
+                else if (-30 >= xVal && xVal > -55)
+                    playerPosition = new Point(playerPosition.X - 2, playerPosition.Y);
+                else if (-55 >= xVal)
+                    playerPosition = new Point(playerPosition.X - 3, playerPosition.Y);
+            }
+
+            if (playerPosition.Y >= 2) //Player go UP
+            {
+                if (5 <= yVal && yVal < 30)
+                    playerPosition = new Point(playerPosition.X, playerPosition.Y - 1);
+                if (30 <= yVal && yVal < 55)
+                    playerPosition = new Point(playerPosition.X, playerPosition.Y - 2);
+                if (55 <= yVal)
+                    playerPosition = new Point(playerPosition.X, playerPosition.Y - 3);
+            }
+
+            if (playerPosition.Y <= this.ClientSize.Height - playerSize.Height) //Player go DOWN
+            {
+                if (-5 >= yVal && yVal > 30)
+                    playerPosition = new Point(playerPosition.X, playerPosition.Y + 1);
+                if (-30 >= yVal && yVal > 55)
+                    playerPosition = new Point(playerPosition.X, playerPosition.Y + 2);
+                if (-55 >= yVal)
+                    playerPosition = new Point(playerPosition.X, playerPosition.Y + 3);
             }
 
             // Check for collision between chicken and player
@@ -176,13 +182,14 @@ namespace ChickenGame
             {
                 Rectangle chickenRect = new Rectangle(chickenObject.Item1, chickenSize);
                 Rectangle playerRect = new Rectangle(new Point(playerPosition.X + 15, playerPosition.Y + 15), new Size(20, 20));
-                if(chickenRect.IntersectsWith(playerRect))
+                if (chickenRect.IntersectsWith(playerRect))
                 {
                     gameOver = true;
                     timer.Stop();
                     tryAgainButton.Visible = true;
-                    MessageBox.Show("Game Over!\nYour score: " + score, "Notification");
-                    //WaitForTryAgain();
+                    String tryAgainButtonLabel = "YOUR SCORE: " + score + "\n> TRY AGAIN <";
+                    tryAgainButton.Text = tryAgainButtonLabel;
+                    //MessageBox.Show("Game Over!\nYour score: " + score, "Notification");
                     return;
                 }
             }
@@ -192,7 +199,6 @@ namespace ChickenGame
 
             // Redraw the form
             this.Invalidate();
-
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -223,18 +229,26 @@ namespace ChickenGame
             }
         }
 
-        //readData from serial form: "X:1 Y:-1"
+        //readData from serial
         private void ProcessJoystickData(string readData)
         {
             string[] strings = readData.Trim().Split(' ');
-            if (strings.Length == 2)
+            if (strings.Length == 3)
             {
-                if (int.TryParse(strings[0].Trim(), out int newXVal) && int.TryParse(strings[1].Trim(), out int newYVal))
+                if (int.TryParse(strings[0].Trim(), out int newXVal) && int.TryParse(strings[1].Trim(), out int newYVal) && int.TryParse(strings[2].Trim(), out int newButtonVals))
                 {
                     if (Math.Abs(newXVal - xVal) >= 1 || Math.Abs(newYVal - yVal) >= 1)
                     {
                         xVal = newXVal;
                         yVal = newYVal;
+                    }
+                    bVal1 = (newButtonVals & 1) == 1;
+                    bVal2 = (newButtonVals & 2) == 2;
+
+                    if (bVal2 && gameOver)
+                    {
+                        // Invoke the button click on the UI thread
+                        this.Invoke(new Action(() => tryAgainButton.PerformClick()));
                     }
                 }
             }
@@ -260,19 +274,6 @@ namespace ChickenGame
             timer.Start();
         }
 
-        /* Using button on DE10 board to replace using mouse to click 'Try Again' on-screen button */
-        //private void WaitForTryAgain()
-        //{
-        //    while (gameOver)
-        //    {
-        //        if (!pVal)  //JoyStick's button is pushed
-        //        {
-        //            TryAgain();
-        //            break;
-        //        }
-        //    }
-        //}
-        
         // Draw out object on the screen
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -294,7 +295,7 @@ namespace ChickenGame
         // Closing SerialPort when Form close
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(serialPort.IsOpen)
+            if (serialPort.IsOpen)
             {
                 serialPort.Close();
             }
