@@ -26,15 +26,14 @@ namespace ChickenGame
         //Joystick var
         private int xVal;           //Horizontal control val
         private int yVal;           //Vertical control val
-        private bool bVal1;         //Start game button
-        private bool bVal2;         //Try again button
+        private bool bVal;         //Try again button
         private StringBuilder dataBuffer;   //Store data from serial port
 
         //Chickens
         private List<Tuple<Point, Image>> chickenObjects;
         private Size chickenSize;
         private List<Image> chickenImages;
-
+        
         //Player
         private Image playerImage;
         private Size playerSize;
@@ -182,7 +181,7 @@ namespace ChickenGame
             {
                 Rectangle chickenRect = new Rectangle(chickenObject.Item1, chickenSize);
                 Rectangle playerRect = new Rectangle(new Point(playerPosition.X + 15, playerPosition.Y + 15), new Size(20, 20));
-                if (chickenRect.IntersectsWith(playerRect))
+                if(chickenRect.IntersectsWith(playerRect))
                 {
                     gameOver = true;
                     timer.Stop();
@@ -242,10 +241,9 @@ namespace ChickenGame
                         xVal = newXVal;
                         yVal = newYVal;
                     }
-                    bVal1 = (newButtonVals & 1) == 1;
-                    bVal2 = (newButtonVals & 2) == 2;
+                    bVal = (newButtonVals & 1) == 1;
 
-                    if (bVal2 && gameOver)
+                    if (bVal && gameOver)
                     {
                         // Invoke the button click on the UI thread
                         this.Invoke(new Action(() => tryAgainButton.PerformClick()));
@@ -295,7 +293,7 @@ namespace ChickenGame
         // Closing SerialPort when Form close
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (serialPort.IsOpen)
+            if(serialPort.IsOpen)
             {
                 serialPort.Close();
             }
