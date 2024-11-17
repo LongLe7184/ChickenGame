@@ -7,7 +7,7 @@ _This indie game was created for learning purpose!_
 
 ![image](https://github.com/user-attachments/assets/dac34634-3a7a-4123-97df-bacb8d38d6ab)
 
-**_The lastest version is 1.1 - Please check the branchs list_**
+**_The lastest version is 1.1 - Please check the branches list_**
 
 **Version 1.0**
 _The game is still in progess_
@@ -18,12 +18,12 @@ _The game is still in progess_
 _Testing Setup_
 ![image](https://github.com/user-attachments/assets/28acb836-20f5-4da9-9464-9878bc575df3)
 
-**Data Transmittion Frame:** Values getting from the controller will be processing, and generate to 3 main parameter:
+**Data Transmittion Frame:** Values getting from the controller will be processing, and generate to 3 main parameters:
 - x Value: control player horizontally
 - y Value: control player vertically
 - button Value (optional): this physical button replacing "Try Again" on-screen button
 
-- These parameter will be send through Serial Port under **String format** and processing as below figure:
+- These parameters will be send through Serial Port under **String format** and processing as below figure:
 ![image](https://github.com/user-attachments/assets/c3568ece-4b3b-453a-a1e9-d73fbfd234a6)
 ![image](https://github.com/user-attachments/assets/b49f3f36-88fd-474f-9186-3011a6eb130a)
 
