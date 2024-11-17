@@ -10,8 +10,9 @@ _This indie game was created for learning purpose!_
 **Version 1.1**
 _The game is still in progess_
 - Player is now controllable by a joystick adapt with Arduino Uno R3. The control data is transmitted through a serial port.
-- Current control data transmitting period is 80ns (configged in Arduino and Winform app)
-- Create boundary for the screen, player now can not go out of the screen
+- Current data proccessing period is 50ns (configged in Winform app).
+- Arduino is using default config for UART, baud rate is 9600.
+- Create boundary for the screen, player now can not go out of the screen.
 
 NOTE: In the next update, I will replace the control method by using GSensor on DE10 board. Beside of that, I will add some bgm into the game. Stay tune!
 
