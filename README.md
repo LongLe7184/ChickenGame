@@ -6,9 +6,11 @@ _This indie game was created for learning purpose!_
 + Description: Using G-Sensor on the DE10 to control a jetplane (player) dodges attacking chickens.
 
 _Main Menu_
+
 ![image](https://github.com/user-attachments/assets/804c1b47-3224-48c8-a8ab-48fee3c7b001)
 
 _In Game_
+
 ![image](https://github.com/user-attachments/assets/dac34634-3a7a-4123-97df-bacb8d38d6ab)
 
 **_The lastest version is 1.2 - Please check the branches list_**
