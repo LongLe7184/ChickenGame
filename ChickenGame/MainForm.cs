@@ -26,8 +26,7 @@ namespace ChickenGame
         //Joystick var
         private int xVal;           //Horizontal control val
         private int yVal;           //Vertical control val
-        private bool bVal1;         //Start game button
-        private bool bVal2;         //Try again button
+        private bool bVal1;         //Try again button
         private StringBuilder dataBuffer;   //Store data from serial port
 
         //Chickens
@@ -90,7 +89,8 @@ namespace ChickenGame
 
             //Initial serialPort (communicate with Arduino)
             dataBuffer = new StringBuilder();
-            serialPort = new SerialPort("COM7", 9600);
+            //serialPort = new SerialPort("COM7", 9600);    //manual config
+            serialPort = new SerialPort(SettingForm.selectedPort, SettingForm.selectedBaudRate);
             serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
             serialPort.Open();
 
@@ -243,9 +243,8 @@ namespace ChickenGame
                         yVal = newYVal;
                     }
                     bVal1 = (newButtonVals & 1) == 1;
-                    bVal2 = (newButtonVals & 2) == 2;
 
-                    if (bVal2 && gameOver)
+                    if (bVal1 && gameOver)
                     {
                         // Invoke the button click on the UI thread
                         this.Invoke(new Action(() => tryAgainButton.PerformClick()));

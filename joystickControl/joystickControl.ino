@@ -5,8 +5,7 @@ void setup() {
 void loop() {
     uint16_t xVal = analogRead(A0); //X values from Joystick
     uint16_t yVal = analogRead(A1); //Y values from Joystick
-    bool b1 = digitalRead(7);  //Additional button - Start game - PRESSED -> HIGH LOGIC
-    bool b2 = digitalRead(8);  //Additional button - Try again  - PRESSED -> HIGH LOGIC
+    bool button = digitalRead(8);  //Additional button - Try again  - PRESSED -> HIGH LOGIC
 
     /* Mapping and adjust center Joystick
      * 
@@ -16,7 +15,7 @@ void loop() {
      */
     int8_t mappedX = map(xVal, 0, 1023, 127, 0) - 65;
     int8_t mappedY = map(yVal, 0, 1023, 0, 127) - 62;
-    uint8_t buttons = (b2<<1) | b1;
+    uint8_t buttons = 0x1 & button;
 
     /* 
      * USING ARDUINO DEFAULT CONFIG FOR A UART FRAME - Serial.print
