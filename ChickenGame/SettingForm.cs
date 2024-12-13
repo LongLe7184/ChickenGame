@@ -94,6 +94,7 @@ namespace ChickenGame
             baudRateComboBox.Items.Add("9600");
             baudRateComboBox.Items.Add("14400");
             baudRateComboBox.Items.Add("19200");
+            baudRateComboBox.Items.Add("115200");
 
             baudRateComboBox.SelectedIndex = 0;
         }

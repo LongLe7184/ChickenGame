@@ -169,9 +169,9 @@ namespace ChickenGame
 
             if (playerPosition.Y <= this.ClientSize.Height - playerSize.Height) //Player go DOWN
             {
-                if (-5 >= yVal && yVal > 30)
+                if (-5 >= yVal && yVal > -30)
                     playerPosition = new Point(playerPosition.X, playerPosition.Y + 1);
-                if (-30 >= yVal && yVal > 55)
+                if (-30 >= yVal && yVal > -55)
                     playerPosition = new Point(playerPosition.X, playerPosition.Y + 2);
                 if (-55 >= yVal)
                     playerPosition = new Point(playerPosition.X, playerPosition.Y + 3);
