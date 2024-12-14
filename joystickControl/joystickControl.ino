@@ -26,6 +26,7 @@ void loop() {
     */
      
     //Using " " to splitting the frame so the Winform App can detect it
+    Serial.print("[GSenCtrl] ");
     Serial.print(mappedX);
     Serial.print(" ");  
     Serial.print(mappedY);

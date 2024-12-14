@@ -24,6 +24,9 @@ namespace ChickenGame
         private bool gameOver;      //GameOver flag
 
         //Joystick var
+        private bool getDef;        //Flag for "Got Offset Values or not"
+        private int xDefVal;        //Offset Value of X (Initial Position of DE10)
+        private int yDefVal;        //Offset Value of Y (Initial Position of DE10)
         private int xVal;           //Horizontal control val
         private int yVal;           //Vertical control val
         private bool bVal1;         //Try again button
@@ -59,7 +62,6 @@ namespace ChickenGame
             timer.Tick += BgTimer_Tick;                     //occurs when above timer interval elapsed
             timer.Start();
 
-
             //Initial specific & generic var
             bgSpeed = 1;
             tick = 0;
@@ -68,6 +70,9 @@ namespace ChickenGame
             levelDuration = 0;
             gameOver = false;
             random = new Random();
+
+            //Initial getDef flag
+            getDef = false;
 
             //Initial Chicken objects
             chickenObjects = new List<Tuple<Point, Image>>();    //contains chicken-object
@@ -225,7 +230,12 @@ namespace ChickenGame
                 }
                 string line = dataBuffer.ToString(0, newLineIndex + 1);
                 dataBuffer.Remove(0, newLineIndex + 1);
-                ProcessJoystickData(line.Trim());
+                //Label Filtering from UART Channel
+                if (line.StartsWith("[GSenCtrl]"))
+                {
+                    line = line.Substring("[GSenCtrl] ".Length);
+                    ProcessJoystickData(line.Trim());
+                }
             }
         }
 
@@ -237,10 +247,17 @@ namespace ChickenGame
             {
                 if (int.TryParse(strings[0].Trim(), out int newXVal) && int.TryParse(strings[1].Trim(), out int newYVal) && int.TryParse(strings[2].Trim(), out int newButtonVals))
                 {
+                    if(!getDef)
+                    {
+                        xDefVal = newXVal;
+                        yDefVal = newYVal;
+                        getDef = true;
+                    }
+
                     if (Math.Abs(newXVal - xVal) >= 1 || Math.Abs(newYVal - yVal) >= 1)
                     {
-                        xVal = newXVal;
-                        yVal = newYVal;
+                        xVal = newXVal - xDefVal;
+                        yVal = newYVal - yDefVal;
                     }
                     bVal1 = (newButtonVals & 1) == 1;
 
