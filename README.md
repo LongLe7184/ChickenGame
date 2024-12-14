@@ -7,19 +7,5 @@ _This indie game was created for learning purpose!_
 
 ![image](https://github.com/user-attachments/assets/dac34634-3a7a-4123-97df-bacb8d38d6ab)
 
-**Version 1.1**
-_The game is still in progess_
-- Player is now controllable by a joystick adapt with Arduino Uno R3. The control data is transmitted through a serial port.
-- Current control data transmitting period is 80ns (configged in Arduino and Winform app)
-- Create boundary for the screen, player now can not go out of the screen
-
-NOTE: In the next update, I will replace the control method by using GSensor on DE10 board. Beside of that, I will add some bgm into the game. Stay tune!
-
-**Version 1.0**
-_The game is still in progess_
-- Chickens is now spawn slowly, sequentially. It can dynamically changes based on the difficulty level system.
-- "Game Over " notification message box will pop up whenever chickens collide with player. "Try Again" button will also appears to let the player restart from the beginning.
-- Scoreboard was added to record player's achivement.
-
-NOTE: Currently, the player is not controllable yet. This feature will be added when there is a peripheral device send signal to the app.
-(I will try to use an Arduino adapt with a joy stick to test this future)
+**Version 1.3**
+_This is the latest version_
