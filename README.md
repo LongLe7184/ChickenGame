@@ -13,7 +13,7 @@ _In Game_
 
 ![image](https://github.com/user-attachments/assets/dac34634-3a7a-4123-97df-bacb8d38d6ab)
 
-**_The lastest version is 1.2 - Please check the branches list_**
+**_The lastest version is 1.3 - Please check the branches list_**
 
 **Version 1.0**
 _The game is still in progess_
