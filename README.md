@@ -16,7 +16,7 @@ _In Game_
 **_The lastest version is 1.3 - Please check the branches list_**
 
 **Version 1.0**
-_The game is still in progess_
+_Version 1.3 is the lastest version_
 - Chickens is now spawn slowly, sequentially. It can dynamically changes based on the difficulty level system.
 - "Game Over " notification message box will pop up whenever chickens collide with player. "Try Again" button will also appears to let the player restart from the beginning.
 - Scoreboard was added to record player's achivement.
